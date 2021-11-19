@@ -1,4 +1,4 @@
-![./doc/logo.png](logo.png)
+![./doc/logo.png](./doc/logo.png)
 
 # IP2Location LITE
 

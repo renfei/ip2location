@@ -19,11 +19,4 @@ IP2Location is a registered trademark of Hexasoft Development Sdn Bhd. All other
 
 ## Download
 
-- [IP2LOCATION-LITE-DB11.BIN](./IP2LOCATION-LITE-DB11.BIN)
-- [IP2LOCATION-LITE-DB11.IPV6.BIN](./IP2LOCATION-LITE-DB11.IPV6.BIN)
-
-## Mirror
-
-- [https://github.com/renfei/ip2location](https://github.com/renfei/ip2location)
-- [https://gitlab.com/renfei/ip2location](https://gitlab.com/renfei/ip2location)
-- [https://gitlab.cn/renfei/ip2location](https://gitlab.cn/renfei/ip2location)
+- [Releases](https://github.com/renfei/ip2location/releases)

@@ -6,7 +6,7 @@
 
     <groupId>net.renfei</groupId>
     <artifactId>ip2location</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>ip2location</name>
     <url>http://www.renfei.net</url>
     <description>IP2Location for Java</description>

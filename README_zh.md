@@ -2,26 +2,26 @@
 
 ![./doc/logo.png](./doc/logo.png)
 
-> This site or product includes IP2Location LITE data available from http://www.ip2location.com
+> 此网站或产品包含IP2Location LITE数据，可从 http://www.ip2location.com 获取
 
-# IP2Location for Java
+# IP2Location Java 客户端
 
-The repository code is based on [ip2location repository](https://github.com/ip2location/ip2location-java).
+此代码仓库基于 [ip2location repository](https://github.com/ip2location/ip2location-java)。
 
-## Download
+## 下载
 
-The update cycle of database bin file is once a month.
+数据库 Bin 文件更新周期为一个月一次。
 
-Database bin file:
+下载数据库 bin 文件：
 
 - [Releases](https://github.com/renfei/ip2location/releases)
 
-Or download the zip file in the warehouse and decompress it by yourself.
+或者下载仓库中 ZIP 文件自行解压。
 
 - [IP2LOCATION-LITE-DB11.BIN.ZIP](./IP2LOCATION-LITE-DB11.BIN.ZIP)
 - [IP2LOCATION-LITE-DB11.IPV6.BIN.ZIP](./IP2LOCATION-LITE-DB11.IPV6.BIN.ZIP)
 
-## Installing in maven
+## 使用 Maven 安装客户端
 
 ```xml
 
@@ -32,7 +32,7 @@ Or download the zip file in the warehouse and decompress it by yourself.
 </dependency>
 ```
 
-## Usage
+## 用法
 
 ```java
 import net.renfei.ip2location.*;
@@ -72,3 +72,10 @@ public class Main {
     }
 }
 ```
+
+### 关于数据库Bin文件只在 GitHub 发布的说明
+
+码云（Gitee）发行功能附件大小有限制：
+
+> 单个附件不能超过 100M（GVP 项目200M），每个仓库总附件不可超过 1G（推荐项目不可超过 5G；GVP 项目不可超过 20G）。
+> 附件总容量统计包括仓库附件和发行版附件。

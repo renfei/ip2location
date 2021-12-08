@@ -32,6 +32,8 @@
 </dependency>
 ```
 
+与官方客户端相比，我移除了IP2LocationWebService，移除了对其他库的依赖。
+
 ## 用法
 
 ```java

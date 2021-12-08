@@ -32,6 +32,8 @@ Or download the zip file in the warehouse and decompress it by yourself.
 </dependency>
 ```
 
+Compared with the official client, I removed the ip2locationweb service and the dependency on other libraries.
+
 ## Usage
 
 ```java

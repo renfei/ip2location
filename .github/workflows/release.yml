@@ -19,13 +19,13 @@ jobs:
 
       - name: Unzip
         run: |
-          unzip IP2LOCATION-LITE-DB11.BIN.ZIP
-          unzip IP2LOCATION-LITE-DB11.IPV6.BIN.ZIP
+          unzip -o IP2LOCATION-LITE-DB11.BIN.ZIP -d ./BIN
+          unzip -o IP2LOCATION-LITE-DB11.IPV6.BIN.ZIP -d ./BIN
 
       - name: Upload release asset
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.YOURTOKEN }}
-          file: ./IP2LOCATION-LITE-*.BIN/IP2LOCATION-LITE-*.BIN
+          file: ./BIN/*.BIN
           tag: ${{ github.ref }}
           file_glob: true

@@ -74,3 +74,10 @@ public class Main {
     }
 }
 ```
+
+## Mirror
+
+* [https://github.com/renfei/ip2location](https://github.com/renfei/ip2location)
+* [https://gitlab.com/renfei/ip2location](https://gitlab.com/renfei/ip2location)
+* [https://jihulab.com/renfei/ip2location](https://jihulab.com/renfei/ip2location)
+* [https://gitee.com/rnf/ip2location](https://gitee.com/rnf/ip2location)

@@ -27,7 +27,7 @@ public class IPResult {
     String category;
     String status;
     boolean delay = false;
-    String version = "Version 8.7.0";
+    String version = "Version 8.9.1";
 
     IPResult(String ipstring) {
         ip_address = ipstring;

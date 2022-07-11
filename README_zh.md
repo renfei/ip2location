@@ -28,7 +28,7 @@
 <dependency>
     <groupId>net.renfei</groupId>
     <artifactId>ip2location</artifactId>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -48,7 +48,14 @@ public class Main {
         try {
             String ip = "8.8.8.8";
             String binfile = "/usr/data/IP2LOCATION-LITE-DB11.BIN";
+
+            // 这是用BIN文件初始化
             loc.Open(binfile, true);
+
+            //这是用二进制数组初始化
+            // Path binpath = Paths.get(binfile);
+            // byte[] binFileBytes = Files.readAllBytes(binpath);
+            // loc.Open(binFileBytes);
 
             IPResult rec = loc.IPQuery(ip);
             if ("OK".equals(rec.getStatus())) {
@@ -74,6 +81,76 @@ public class Main {
     }
 }
 ```
+
+## IPTOOLS 工具类
+
+## 方法
+
+下面是此类支持的方法。
+
+| 方法名称                                                       | 描述                                 |
+|------------------------------------------------------------|------------------------------------|
+| public boolean IsIPv4(String IPAddress)                    | 如果字符串是 IPv4 地址，则返回 true。否则为 false。 |
+| public boolean IsIPv6(String IPAddress)                    | 如果字符串是 IPv6 地址，则返回 true。否则为 false。 |
+| public BigInteger IPv4ToDecimal(String IPAddress)          | IPv4 地址转 IP 十进制编码。                 |
+| public BigInteger IPv6ToDecimal(String IPAddress)          | IPv6 地址转 IP 十进制编码。                 |
+| public String DecimalToIPv4(BigInteger IPNum)              | IP 十进制编码转 IPv4 地址。                 |
+| public String DecimalToIPv6(BigInteger IPNum)              | IP 十进制编码转 IPv6 地址。                 |
+| public String CompressIPv6(String IPAddress)               | 返回 IPv6 地址压缩格式。                    |
+| public String ExpandIPv6(String IPAddress)                 | 返回 IPv6 地址扩展格式。                    |
+| public List<String> IPv4ToCIDR(String IPFrom, String IPTo) | 从提供的 IPv4 范围返回 CIDR 列表。            |
+| public List<String> IPv6ToCIDR(String IPFrom, String IPTo) | 从提供的 IPv6 范围返回 CIDR 列表。            |
+| public String[] CIDRToIPv4(String CIDR)                    | 从提供的 CIDR 返回 IPv4 范围。              |
+| public String[] CIDRToIPv6(String CIDR)                    | 从提供的 CIDR 返回 IPv6 范围。              |
+
+## 用法
+
+```java
+import com.ip2location.*;
+
+import java.math.BigInteger;
+import java.util.*;
+
+public class Main {
+    public Main() {
+    }
+
+    public static void main(String[] args) {
+        try {
+            IPTools tools = new IPTools();
+
+            System.out.println(tools.IsIPv4("60.54.166.38"));
+            System.out.println(tools.IsIPv6("2600:1f18:45b0:5b00:f5d8:4183:7710:ceec"));
+            System.out.println(tools.IPv4ToDecimal("60.54.166.38"));
+            System.out.println(tools.IPv6ToDecimal("2600:118:450:5b00:f5d8:4183:7710:ceec"));
+            System.out.println(tools.DecimalToIPv4(new BigInteger("1010214438")));
+            System.out.println(tools.DecimalToIPv6(new BigInteger("50510686025047391022278667396705210092")));
+            System.out.println(tools.CompressIPv6("0000:0000:0000:0035:0000:FFFF:0000:0000"));
+            System.out.println(tools.ExpandIPv6("500:6001:FE:35:0:FFFF::"));
+            List<String> stuff = tools.IPv4ToCIDR("10.0.0.0", "10.10.2.255");
+            stuff.forEach(System.out::println);
+            List<String> stuff2 = tools.IPv6ToCIDR("2001:4860:4860:0000:0000:0000:0000:8888", "2001:4860:4860:0000:eeee:ffff:ffff:ffff");
+            stuff2.forEach(System.out::println);
+            String[] stuff3 = tools.CIDRToIPv4("10.123.80.0/12");
+            System.out.println(stuff3[0]);
+            System.out.println(stuff3[1]);
+            String[] stuff4 = tools.CIDRToIPv6("2002:1234::abcd:ffff:c0a8:101/62");
+            System.out.println(stuff4[0]);
+            System.out.println(stuff4[1]);
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace(System.out);
+        }
+    }
+}
+```
+
+## 镜像
+
+* [https://github.com/renfei/ip2location](https://github.com/renfei/ip2location)
+* [https://gitlab.com/renfei/ip2location](https://gitlab.com/renfei/ip2location)
+* [https://jihulab.com/renfei/ip2location](https://jihulab.com/renfei/ip2location)
+* [https://gitee.com/rnf/ip2location](https://gitee.com/rnf/ip2location)
 
 ### 关于数据库Bin文件只在 GitHub 发布的说明
 

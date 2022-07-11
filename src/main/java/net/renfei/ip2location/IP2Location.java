@@ -5,6 +5,7 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.UnknownHostException;
 import java.io.*;
+import java.text.NumberFormat;
 import java.util.*;
 import java.util.regex.*;
 import java.math.BigInteger;
@@ -13,7 +14,7 @@ import java.nio.MappedByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import java.text.DecimalFormatSymbols;
 
 public class IP2Location {
     private static final Pattern pattern = Pattern.compile("^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"); // IPv4
@@ -51,6 +52,12 @@ public class IP2Location {
     private static final int[] USAGETYPE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 20, 20};
     private static final int[] ADDRESSTYPE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21};
     private static final int[] CATEGORY_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22};
+    static final DecimalFormat GEO_COORDINATE_FORMAT;
+    static {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setDecimalSeparator('.');
+        GEO_COORDINATE_FORMAT = new DecimalFormat("###.######", symbols);
+    }
 
     private MetaData _MetaData = null;
     private MappedByteBuffer _IPv4Buffer = null;
@@ -74,6 +81,7 @@ public class IP2Location {
      * Sets the path for the license key file.
      */
     public String IPLicensePath = "";
+    private FileLike.Supplier binFile;
     private int COUNTRY_POSITION_OFFSET;
     private int REGION_POSITION_OFFSET;
     private int CITY_POSITION_OFFSET;
@@ -129,6 +137,33 @@ public class IP2Location {
      */
     public void Open(String DBPath) throws IOException {
         IPDatabasePath = DBPath;
+        binFile = new FileLike.Supplier() {
+            public FileLike open() throws IOException {
+                return new FileLike() {
+                    private final RandomAccessFile aFile = new RandomAccessFile(DBPath, "r");
+
+                    public int read(byte[] buffer) throws IOException {
+                        return aFile.read(buffer);
+                    }
+
+                    public int read(byte[] b, int off, int len) throws IOException {
+                        return aFile.read(b, off, len);
+                    }
+
+                    public void seek(long pos) throws IOException {
+                        aFile.seek(pos);
+                    }
+
+                    public void close() throws IOException {
+                        aFile.close();
+                    }
+                };
+            }
+
+            public boolean isValid() {
+                return DBPath.length() > 0;
+            }
+        };
         LoadBIN();
     }
 
@@ -142,6 +177,51 @@ public class IP2Location {
     public void Open(String DBPath, boolean UseMMF) throws IOException {
         UseMemoryMappedFile = UseMMF;
         Open(DBPath);
+    }
+
+    public void Open(byte[] db) throws IOException {
+        binFile = new FileLike.Supplier() {
+            public FileLike open() {
+                return new FileLike() {
+                    private final ByteArrayInputStream stream = new ByteArrayInputStream(db);
+
+                    public int read(byte[] buffer) throws IOException {
+                        return stream.read(buffer);
+                    }
+
+                    public int read(byte[] b, int off, int len) {
+                        return stream.read(b, off, len);
+                    }
+
+                    public void seek(long pos) {
+                        stream.reset();
+                        stream.skip(pos);
+                    }
+
+                    public void close() throws IOException {
+                        stream.close();
+                    }
+                };
+            }
+
+            public boolean isValid() {
+                return db.length > 0;
+            }
+        };
+        LoadBIN();
+    }
+
+    interface FileLike {
+
+        interface Supplier {
+            FileLike open() throws IOException;
+            boolean isValid();
+        }
+
+        int read(byte[] buffer) throws IOException;
+        int read(byte b[], int off, int len) throws IOException;
+        void seek(long pos) throws IOException;
+        void close() throws IOException;
     }
 
     /**
@@ -190,11 +270,11 @@ public class IP2Location {
 
     private boolean LoadBIN() throws IOException {
         boolean loadOK = false;
-        RandomAccessFile aFile = null;
+        FileLike aFile = null;
 
         try {
-            if (IPDatabasePath.length() > 0) {
-                aFile = new RandomAccessFile(IPDatabasePath, "r");
+            if (binFile.isValid()) {
+                aFile = binFile.open();
                 byte[] _HeaderData = new byte[64];
                 aFile.read(_HeaderData);
                 ByteBuffer _HeaderBuffer = ByteBuffer.wrap(_HeaderData);
@@ -349,7 +429,7 @@ public class IP2Location {
     public IPResult IPQuery(String IPAddress) throws IOException {
         IPAddress = IPAddress.trim();
         IPResult record = new IPResult(IPAddress);
-        RandomAccessFile filehandle = null;
+        FileLike filehandle = null;
         ByteBuffer mybuffer = null;
         ByteBuffer mydatabuffer = null;
         byte[] row;
@@ -412,7 +492,7 @@ public class IP2Location {
                 }
             } else {
                 DestroyMappedBytes();
-                filehandle = new RandomAccessFile(IPDatabasePath, "r");
+                filehandle = binFile.open();
             }
 
             if (myiptype == 4) { // IPv4
@@ -860,7 +940,7 @@ public class IP2Location {
         }
     }
 
-    private byte[] readRow(final long position, final long mylen, final ByteBuffer mybuffer, final RandomAccessFile filehandle) throws IOException {
+    private byte[] readRow(final long position, final long mylen, final ByteBuffer mybuffer, final FileLike filehandle) throws IOException {
         byte[] row = new byte[(int) mylen];
         if (UseMemoryMappedFile) {
             mybuffer.position((int) position);
@@ -879,7 +959,7 @@ public class IP2Location {
         return new BigInteger(1, buf);
     }
 
-    private BigInteger read32or128(final long position, final int myiptype, final ByteBuffer mybuffer, final RandomAccessFile filehandle) throws IOException {
+    private BigInteger read32or128(final long position, final int myiptype, final ByteBuffer mybuffer, final FileLike filehandle) throws IOException {
         if (myiptype == 4) {
             return read32(position, mybuffer, filehandle);
         } else if (myiptype == 6) {
@@ -888,7 +968,7 @@ public class IP2Location {
         return BigInteger.ZERO;
     }
 
-    private BigInteger read128(final long position, final ByteBuffer mybuffer, final RandomAccessFile filehandle) throws IOException {
+    private BigInteger read128(final long position, final ByteBuffer mybuffer, final FileLike filehandle) throws IOException {
         BigInteger retval;
         final int bsize = 16;
         byte[] buf = new byte[bsize];
@@ -913,7 +993,7 @@ public class IP2Location {
         return new BigInteger(1, buf);
     }
 
-    private BigInteger read32(final long position, final ByteBuffer mybuffer, final RandomAccessFile filehandle) throws IOException {
+    private BigInteger read32(final long position, final ByteBuffer mybuffer, final FileLike filehandle) throws IOException {
         if (UseMemoryMappedFile) {
             // simulate unsigned int by using long
             return BigInteger.valueOf(mybuffer.getInt((int) position) & 0xffffffffL); // use absolute offset to be thread-safe
@@ -927,8 +1007,8 @@ public class IP2Location {
         }
     }
 
-    private String readStr(long position, final ByteBuffer mydatabuffer, final RandomAccessFile filehandle) throws IOException {
-        int size = 257; // max size of string field + 1 byte for the position
+    private String readStr(long position, final ByteBuffer mydatabuffer, final FileLike filehandle) throws IOException {
+        int size = 256; // max size of string field + 1 byte for the length
         final int len;
         final byte[] data = new byte[size];
         byte[] buf;
@@ -975,11 +1055,7 @@ public class IP2Location {
     }
 
     private String setDecimalPlaces(float myfloat) {
-        Locale currentLocale = Locale.getDefault();
-        NumberFormat nf = NumberFormat.getNumberInstance(currentLocale);
-        DecimalFormat df = (DecimalFormat) nf;
-        df.applyPattern("###.######");
-        return df.format(myfloat).replace(',', '.');
+        return GEO_COORDINATE_FORMAT.format(myfloat);
     }
 
     private BigInteger[] ip2No(String ipstring) throws UnknownHostException {

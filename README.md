@@ -28,7 +28,7 @@ Or download the zip file in the warehouse and decompress it by yourself.
 <dependency>
     <groupId>net.renfei</groupId>
     <artifactId>ip2location</artifactId>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -48,7 +48,14 @@ public class Main {
         try {
             String ip = "8.8.8.8";
             String binfile = "/usr/data/IP2LOCATION-LITE-DB11.BIN";
+
+            // this is to initialize with a BIN file
             loc.Open(binfile, true);
+
+            // this is to initialize with a byte array
+            // Path binpath = Paths.get(binfile);
+            // byte[] binFileBytes = Files.readAllBytes(binpath);
+            // loc.Open(binFileBytes);
 
             IPResult rec = loc.IPQuery(ip);
             if ("OK".equals(rec.getStatus())) {
@@ -70,6 +77,69 @@ public class Main {
             e.printStackTrace(System.out);
         } finally {
             loc.Close();
+        }
+    }
+}
+```
+
+## IPTOOLS CLASS
+
+## Methods
+
+Below are the methods supported in this class.
+
+| Method Name                                                | Description                                                       |
+|------------------------------------------------------------|-------------------------------------------------------------------|
+| public boolean IsIPv4(String IPAddress)                    | Returns true if string contains an IPv4 address. Otherwise false. |
+| public boolean IsIPv6(String IPAddress)                    | Returns true if string contains an IPv6 address. Otherwise false. |
+| public BigInteger IPv4ToDecimal(String IPAddress)          | Returns the IP number for an IPv4 address.                        |
+| public BigInteger IPv6ToDecimal(String IPAddress)          | Returns the IP number for an IPv6 address.                        |
+| public String DecimalToIPv4(BigInteger IPNum)              | Returns the IPv4 address for the supplied IP number.              |
+| public String DecimalToIPv6(BigInteger IPNum)              | Returns the IPv6 address for the supplied IP number.              |
+| public String CompressIPv6(String IPAddress)               | Returns the IPv6 address in compressed form.                      |
+| public String ExpandIPv6(String IPAddress)                 | Returns the IPv6 address in expanded form.                        |
+| public List<String> IPv4ToCIDR(String IPFrom, String IPTo) | Returns a list of CIDR from the supplied IPv4 range.              |
+| public List<String> IPv6ToCIDR(String IPFrom, String IPTo) | Returns a list of CIDR from the supplied IPv6 range.              |
+| public String[] CIDRToIPv4(String CIDR)                    | Returns the IPv4 range from the supplied CIDR.                    |
+| public String[] CIDRToIPv6(String CIDR)                    | Returns the IPv6 range from the supplied CIDR.                    |
+
+## Usage
+
+```java
+import com.ip2location.*;
+
+import java.math.BigInteger;
+import java.util.*;
+
+public class Main {
+    public Main() {
+    }
+
+    public static void main(String[] args) {
+        try {
+            IPTools tools = new IPTools();
+
+            System.out.println(tools.IsIPv4("60.54.166.38"));
+            System.out.println(tools.IsIPv6("2600:1f18:45b0:5b00:f5d8:4183:7710:ceec"));
+            System.out.println(tools.IPv4ToDecimal("60.54.166.38"));
+            System.out.println(tools.IPv6ToDecimal("2600:118:450:5b00:f5d8:4183:7710:ceec"));
+            System.out.println(tools.DecimalToIPv4(new BigInteger("1010214438")));
+            System.out.println(tools.DecimalToIPv6(new BigInteger("50510686025047391022278667396705210092")));
+            System.out.println(tools.CompressIPv6("0000:0000:0000:0035:0000:FFFF:0000:0000"));
+            System.out.println(tools.ExpandIPv6("500:6001:FE:35:0:FFFF::"));
+            List<String> stuff = tools.IPv4ToCIDR("10.0.0.0", "10.10.2.255");
+            stuff.forEach(System.out::println);
+            List<String> stuff2 = tools.IPv6ToCIDR("2001:4860:4860:0000:0000:0000:0000:8888", "2001:4860:4860:0000:eeee:ffff:ffff:ffff");
+            stuff2.forEach(System.out::println);
+            String[] stuff3 = tools.CIDRToIPv4("10.123.80.0/12");
+            System.out.println(stuff3[0]);
+            System.out.println(stuff3[1]);
+            String[] stuff4 = tools.CIDRToIPv6("2002:1234::abcd:ffff:c0a8:101/62");
+            System.out.println(stuff4[0]);
+            System.out.println(stuff4[1]);
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace(System.out);
         }
     }
 }

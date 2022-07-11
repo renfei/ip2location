@@ -6,7 +6,7 @@
 
     <groupId>net.renfei</groupId>
     <artifactId>ip2location</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <name>ip2location</name>
     <url>http://www.renfei.net</url>
     <description>IP2Location Java Component enables applications to get info from IP address such as the visitor’s country, region, city, latitude, longitude, ZIP code, ISP name, domain name, time zone, connection speed, IDD code, area code, weather station code, weather station name, MCC, MNC, mobile brand name, elevation and usage type.</description>

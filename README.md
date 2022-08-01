@@ -82,6 +82,21 @@ public class Main {
 }
 ```
 
+### Database Fields
+
+| Name         | Type                      | Description                                                           |
+|--------------|---------------------------|-----------------------------------------------------------------------|
+| ip_from      | INT (10) / DECIMAL (39,0) | First IP address show netblock.                                       |
+| ip_to        | INT (10) / DECIMAL (39,0) | Last IP address show netblock.                                        |
+| country_code | CHAR(2)                   | Two-character country code based on ISO 3166.                         |
+| country_name | VARCHAR(64)               | Country name based on ISO 3166.                                       |
+| region_name  | VARCHAR(128)              | Region or state name.                                                 |
+| city_name    | VARCHAR(128)              | City name.                                                            |
+| latitude     | DOUBLE                    | City latitude. Default to capital city latitude if city is unknown.   |
+| longitude    | DOUBLE                    | City longitude. Default to capital city longitude if city is unknown. |
+| zip_code     | VARCHAR(30)               | ZIP/Postal code.                                                      |
+| time_zone    | VARCHAR(8)                | UTC time zone (with DST supported).                                   |
+
 ## IPTOOLS CLASS
 
 ## Methods

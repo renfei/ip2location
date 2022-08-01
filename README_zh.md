@@ -82,6 +82,21 @@ public class Main {
 }
 ```
 
+### 数据库字段
+
+| 名称            | 类型                        | 描述                        |
+|---------------|---------------------------|---------------------------|
+| ip_from       | INT (10) / DECIMAL (39,0) | 第一个IP地址显示netblock。        |
+| ip_to         | INT (10) / DECIMAL (39,0) | 上一个IP地址显示netblock。        |
+| country_code  | CHAR(2)                   | 基于ISO 3166的两个字符的国家/地区代码。  |
+| country_name  | VARCHAR(64)               | 基于ISO 3166的国家/地区名称。       |
+| region_name   | VARCHAR(128)              | 地区或州名称。                   |
+| city_name     | VARCHAR(128)              | 城市名。                      |
+| latitude      | DOUBLE                    | 城市纬度。如果城市未知，则默认为首都纬度。     |
+| longitude     | DOUBLE                    | 城市经度。如果城市未知，则默认为首都城市经度。   |
+| zip_code      | VARCHAR(30)               | 邮编/邮政编码。                  |
+| time_zone     | VARCHAR(8)                | UTC时区（支持DST）。             |
+
 ## IPTOOLS 工具类
 
 ## 方法

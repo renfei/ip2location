@@ -9,8 +9,10 @@ jobs:
     name: Renew
     runs-on: ubuntu-latest
     steps:
-      - name: Download
+      - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Download
         run: |
           echo "::set-env name=NOW::$(date +'%Y.%m.%d')"
           wget https://www.ip2location.com/download/?token=${{ secrets.IP2LOCATION_TOKEN }}&file=DB11LITEBIN

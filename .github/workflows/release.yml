@@ -1,0 +1,31 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release_ip2location:
+    name: Release IP2Location
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Unzip
+        run: |
+          unzip -o IP2LOCATION-LITE-DB11.BIN.ZIP -d ./BIN
+          unzip -o IP2LOCATION-LITE-DB11.IPV6.BIN.ZIP -d ./BIN
+
+      - name: Upload release asset
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.YOURTOKEN }}
+          file: ./BIN/*.BIN
+          tag: ${{ github.ref }}
+          file_glob: true

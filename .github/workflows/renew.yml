@@ -14,7 +14,7 @@ jobs:
 
       - name: Download
         run: |
-          echo "::set-env name=NOW::$(date +'%Y.%m.%d')"
+          echo "NOW=$(date +'%Y.%m.%d')" >> $GITHUB_ENV
           wget https://www.ip2location.com/download/?token=${{ secrets.IP2LOCATION_TOKEN }}&file=DB11LITEBIN
           wget https://www.ip2location.com/download/?token=${{ secrets.IP2LOCATION_TOKEN }}&file=DB11LITEBINIPV6
 
@@ -38,6 +38,5 @@ jobs:
         with:
           repo_token: ${{ secrets.YOURTOKEN }}
           automatic_release_tag: ${{ env.NOW }}
-          prerelease: true
+          prerelease: false
           title: ${{ env.NOW }}
-          files: ./BIN/*.BIN

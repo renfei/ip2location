@@ -34,7 +34,7 @@ jobs:
           unzip -o IP2LOCATION-LITE-DB11.IPV6.BIN.ZIP -d ./BIN
 
       - name: Release
-        use: marvinpinto/action-automatic-releases@latest
+        uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.YOURTOKEN }}
           automatic_release_tag: ${{ env.NOW }}

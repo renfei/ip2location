@@ -12,12 +12,12 @@ jobs:
       - name: Download
         uses: actions/checkout@v2
         run: |
+          echo "::set-env name=NOW::$(date +'%Y.%m.%d')"
           wget https://www.ip2location.com/download/?token=${{ secrets.IP2LOCATION_TOKEN }}&file=DB11LITEBIN
           wget https://www.ip2location.com/download/?token=${{ secrets.IP2LOCATION_TOKEN }}&file=DB11LITEBINIPV6
 
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v4
-        run: echo "::set-env name=NOW::$(date +'%Y.%m.%d')"
         with:
           commit_message: Renew Database
           commit_user_name: github-actions[bot]

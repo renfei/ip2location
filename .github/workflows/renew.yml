@@ -15,8 +15,8 @@ jobs:
       - name: Download
         run: |
           echo "NOW=$(date +'%Y.%m.%d')" >> $GITHUB_ENV
-          wget https://www.ip2location.com/download/?token=${{ secrets.IP2LOCATION_TOKEN }}&file=DB11LITEBIN -O ./IP2LOCATION-LITE-DB11.BIN.ZIP
-          wget https://www.ip2location.com/download/?token=${{ secrets.IP2LOCATION_TOKEN }}&file=DB11LITEBINIPV6 -O ./IP2LOCATION-LITE-DB11.IPV6.BIN.ZIP
+          wget "https://www.ip2location.com/download/?token=${{ secrets.IP2LOCATION_TOKEN }}&file=DB11LITEBIN" -O ./IP2LOCATION-LITE-DB11.BIN.ZIP
+          wget "https://www.ip2location.com/download/?token=${{ secrets.IP2LOCATION_TOKEN }}&file=DB11LITEBINIPV6" -O ./IP2LOCATION-LITE-DB11.IPV6.BIN.ZIP
 
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v4

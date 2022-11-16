@@ -8,6 +8,8 @@
 
 The repository code is based on [ip2location repository](https://github.com/ip2location/ip2location-java).
 
+Example: [https://www.renfei.net/kitbox/ip](https://www.renfei.net/kitbox/ip)
+
 ## Download
 
 The update cycle of database bin file is once a month.

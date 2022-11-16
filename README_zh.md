@@ -8,6 +8,8 @@
 
 此代码仓库基于 [ip2location repository](https://github.com/ip2location/ip2location-java)。
 
+案例： [https://www.renfei.net/kitbox/ip](https://www.renfei.net/kitbox/ip)
+
 ## 下载
 
 数据库 Bin 文件更新周期为一个月一次。

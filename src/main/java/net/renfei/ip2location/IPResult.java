@@ -25,9 +25,12 @@ public class IPResult {
     String usagetype;
     String addresstype;
     String category;
+    String district;
+    String asn;
+    String as;
     String status;
     boolean delay = false;
-    String version = "Version 8.9.1";
+    String version = "Version 8.11.0";
 
     IPResult(String ipstring) {
         ip_address = ipstring;
@@ -232,6 +235,33 @@ public class IPResult {
     }
 
     /**
+     * This method to get district.
+     *
+     * @return the district.
+     */
+    public String getDistrict() {
+        return district;
+    }
+
+    /**
+     * This method to get autonomous system number (ASN).
+     *
+     * @return the ASN.
+     */
+    public String getASN() {
+        return asn;
+    }
+
+    /**
+     * This method to get autonomous system (AS).
+     *
+     * @return the AS.
+     */
+    public String getAS() {
+        return as;
+    }
+
+    /**
      * This method to get status code of query.
      *
      * @return the status code
@@ -263,30 +293,38 @@ public class IPResult {
      *
      * @return the result in a formatted string.
      */
+    @Override
     public String toString() {
-        String NL = System.getProperty("line.separator");
-        return "IP2LocationRecord:" + NL + "\tIP Address = " + ip_address + NL +
-                "\tCountry Short = " + country_short + NL +
-                "\tCountry Long = " + country_long + NL +
-                "\tRegion = " + region + NL +
-                "\tCity = " + city + NL +
-                "\tISP = " + isp + NL +
-                "\tLatitude = " + latitude + NL +
-                "\tLongitude = " + longitude + NL +
-                "\tDomain = " + domain + NL +
-                "\tZipCode = " + zipcode + NL +
-                "\tTimeZone = " + timezone + NL +
-                "\tNetSpeed = " + netspeed + NL +
-                "\tIDDCode = " + iddcode + NL +
-                "\tAreaCode = " + areacode + NL +
-                "\tWeatherStationCode = " + weatherstationcode + NL +
-                "\tWeatherStationName = " + weatherstationname + NL +
-                "\tMCC = " + mcc + NL +
-                "\tMNC = " + mnc + NL +
-                "\tMobileBrand = " + mobilebrand + NL +
-                "\tElevation = " + elevation + NL +
-                "\tUsageType = " + usagetype + NL +
-                "\tAddressType = " + addresstype + NL +
-                "\tCategory = " + category + NL;
+        return "IPResult{" +
+                "ip_address='" + ip_address + '\'' +
+                ", country_short='" + country_short + '\'' +
+                ", country_long='" + country_long + '\'' +
+                ", region='" + region + '\'' +
+                ", city='" + city + '\'' +
+                ", isp='" + isp + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", domain='" + domain + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", netspeed='" + netspeed + '\'' +
+                ", timezone='" + timezone + '\'' +
+                ", iddcode='" + iddcode + '\'' +
+                ", areacode='" + areacode + '\'' +
+                ", weatherstationcode='" + weatherstationcode + '\'' +
+                ", weatherstationname='" + weatherstationname + '\'' +
+                ", mcc='" + mcc + '\'' +
+                ", mnc='" + mnc + '\'' +
+                ", mobilebrand='" + mobilebrand + '\'' +
+                ", elevation=" + elevation +
+                ", usagetype='" + usagetype + '\'' +
+                ", addresstype='" + addresstype + '\'' +
+                ", category='" + category + '\'' +
+                ", district='" + district + '\'' +
+                ", asn='" + asn + '\'' +
+                ", as='" + as + '\'' +
+                ", status='" + status + '\'' +
+                ", delay=" + delay +
+                ", version='" + version + '\'' +
+                '}';
     }
 }

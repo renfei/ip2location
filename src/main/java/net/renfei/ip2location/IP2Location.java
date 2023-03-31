@@ -31,28 +31,32 @@ public class IP2Location {
     private static final BigInteger TO_TEREDO = new BigInteger("42540488241204005274814694018844196863");
     private static final BigInteger LAST_32BITS = new BigInteger("4294967295");
 
-    private static final int[] COUNTRY_POSITION = {0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
-    private static final int[] REGION_POSITION = {0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
-    private static final int[] CITY_POSITION = {0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
-    private static final int[] ISP_POSITION = {0, 0, 3, 0, 5, 0, 7, 5, 7, 0, 8, 0, 9, 0, 9, 0, 9, 0, 9, 7, 9, 0, 9, 7, 9, 9};
-    private static final int[] LATITUDE_POSITION = {0, 0, 0, 0, 0, 5, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
-    private static final int[] LONGITUDE_POSITION = {0, 0, 0, 0, 0, 6, 6, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6};
-    private static final int[] DOMAIN_POSITION = {0, 0, 0, 0, 0, 0, 0, 6, 8, 0, 9, 0, 10, 0, 10, 0, 10, 0, 10, 8, 10, 0, 10, 8, 10, 10};
-    private static final int[] ZIPCODE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 0, 7, 7, 7, 0, 7, 0, 7, 7, 7, 0, 7, 7};
-    private static final int[] TIMEZONE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 7, 8, 8, 8, 7, 8, 0, 8, 8, 8, 0, 8, 8};
-    private static final int[] NETSPEED_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 11, 0, 11, 8, 11, 0, 11, 0, 11, 0, 11, 11};
-    private static final int[] IDDCODE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 12, 0, 12, 0, 12, 9, 12, 0, 12, 12};
-    private static final int[] AREACODE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 13, 0, 13, 0, 13, 10, 13, 0, 13, 13};
-    private static final int[] WEATHERSTATIONCODE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 14, 0, 14, 0, 14, 0, 14, 14};
-    private static final int[] WEATHERSTATIONNAME_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 15, 0, 15, 0, 15, 0, 15, 15};
-    private static final int[] MCC_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 16, 0, 16, 9, 16, 16};
-    private static final int[] MNC_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 17, 0, 17, 10, 17, 17};
-    private static final int[] MOBILEBRAND_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 18, 0, 18, 11, 18, 18};
-    private static final int[] ELEVATION_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 19, 0, 19, 19};
-    private static final int[] USAGETYPE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 20, 20};
-    private static final int[] ADDRESSTYPE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21};
-    private static final int[] CATEGORY_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22};
+    private static final int[] COUNTRY_POSITION = {0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
+    private static final int[] REGION_POSITION = {0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
+    private static final int[] CITY_POSITION = {0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
+    private static final int[] ISP_POSITION = {0, 0, 3, 0, 5, 0, 7, 5, 7, 0, 8, 0, 9, 0, 9, 0, 9, 0, 9, 7, 9, 0, 9, 7, 9, 9, 9};
+    private static final int[] LATITUDE_POSITION = {0, 0, 0, 0, 0, 5, 5, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
+    private static final int[] LONGITUDE_POSITION = {0, 0, 0, 0, 0, 6, 6, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6};
+    private static final int[] DOMAIN_POSITION = {0, 0, 0, 0, 0, 0, 0, 6, 8, 0, 9, 0, 10, 0, 10, 0, 10, 0, 10, 8, 10, 0, 10, 8, 10, 10, 10};
+    private static final int[] ZIPCODE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 7, 7, 0, 7, 7, 7, 0, 7, 0, 7, 7, 7, 0, 7, 7, 7};
+    private static final int[] TIMEZONE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 8, 7, 8, 8, 8, 7, 8, 0, 8, 8, 8, 0, 8, 8, 8};
+    private static final int[] NETSPEED_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 11, 0, 11, 8, 11, 0, 11, 0, 11, 0, 11, 11, 11};
+    private static final int[] IDDCODE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 12, 0, 12, 0, 12, 9, 12, 0, 12, 12, 12};
+    private static final int[] AREACODE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 13, 0, 13, 0, 13, 10, 13, 0, 13, 13, 13};
+    private static final int[] WEATHERSTATIONCODE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 14, 0, 14, 0, 14, 0, 14, 14, 14};
+    private static final int[] WEATHERSTATIONNAME_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 15, 0, 15, 0, 15, 0, 15, 15, 15};
+    private static final int[] MCC_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 16, 0, 16, 9, 16, 16, 16};
+    private static final int[] MNC_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 17, 0, 17, 10, 17, 17, 17};
+    private static final int[] MOBILEBRAND_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 18, 0, 18, 11, 18, 18, 18};
+    private static final int[] ELEVATION_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 19, 0, 19, 19, 19};
+    private static final int[] USAGETYPE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 20, 20, 20};
+    private static final int[] ADDRESSTYPE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 21, 21};
+    private static final int[] CATEGORY_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 22};
+    private static final int[] DISTRICT_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23};
+    private static final int[] ASN_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24};
+    private static final int[] AS_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25};
     static final DecimalFormat GEO_COORDINATE_FORMAT;
+
     static {
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setDecimalSeparator('.');
@@ -103,6 +107,9 @@ public class IP2Location {
     private int USAGETYPE_POSITION_OFFSET;
     private int ADDRESSTYPE_POSITION_OFFSET;
     private int CATEGORY_POSITION_OFFSET;
+    private int DISTRICT_POSITION_OFFSET;
+    private int ASN_POSITION_OFFSET;
+    private int AS_POSITION_OFFSET;
     private boolean COUNTRY_ENABLED;
     private boolean REGION_ENABLED;
     private boolean CITY_ENABLED;
@@ -124,6 +131,9 @@ public class IP2Location {
     private boolean USAGETYPE_ENABLED;
     private boolean ADDRESSTYPE_ENABLED;
     private boolean CATEGORY_ENABLED;
+    private boolean DISTRICT_ENABLED;
+    private boolean ASN_ENABLED;
+    private boolean AS_ENABLED;
 
     public IP2Location() {
 
@@ -215,12 +225,16 @@ public class IP2Location {
 
         interface Supplier {
             FileLike open() throws IOException;
+
             boolean isValid();
         }
 
         int read(byte[] buffer) throws IOException;
+
         int read(byte b[], int off, int len) throws IOException;
+
         void seek(long pos) throws IOException;
+
         void close() throws IOException;
     }
 
@@ -343,6 +357,9 @@ public class IP2Location {
                 USAGETYPE_POSITION_OFFSET = (USAGETYPE_POSITION[dbtype] != 0) ? (USAGETYPE_POSITION[dbtype] - 2) << 2 : 0;
                 ADDRESSTYPE_POSITION_OFFSET = (ADDRESSTYPE_POSITION[dbtype] != 0) ? (ADDRESSTYPE_POSITION[dbtype] - 2) << 2 : 0;
                 CATEGORY_POSITION_OFFSET = (CATEGORY_POSITION[dbtype] != 0) ? (CATEGORY_POSITION[dbtype] - 2) << 2 : 0;
+                DISTRICT_POSITION_OFFSET = (DISTRICT_POSITION[dbtype] != 0) ? (DISTRICT_POSITION[dbtype] - 2) << 2 : 0;
+                ASN_POSITION_OFFSET = (ASN_POSITION[dbtype] != 0) ? (ASN_POSITION[dbtype] - 2) << 2 : 0;
+                AS_POSITION_OFFSET = (AS_POSITION[dbtype] != 0) ? (AS_POSITION[dbtype] - 2) << 2 : 0;
 
                 COUNTRY_ENABLED = (COUNTRY_POSITION[dbtype] != 0);
                 REGION_ENABLED = (REGION_POSITION[dbtype] != 0);
@@ -365,6 +382,9 @@ public class IP2Location {
                 USAGETYPE_ENABLED = (USAGETYPE_POSITION[dbtype] != 0);
                 ADDRESSTYPE_ENABLED = (ADDRESSTYPE_POSITION[dbtype] != 0);
                 CATEGORY_ENABLED = (CATEGORY_POSITION[dbtype] != 0);
+                DISTRICT_ENABLED = (DISTRICT_POSITION[dbtype] != 0);
+                ASN_ENABLED = (ASN_POSITION[dbtype] != 0);
+                AS_ENABLED = (AS_POSITION[dbtype] != 0);
 
                 if (_MetaData.getIndexed()) {
                     int readLen = _IndexArrayIPv4.length;
@@ -697,6 +717,24 @@ public class IP2Location {
                         record.category = readStr(position, mydatabuffer, filehandle);
                     } else {
                         record.category = IPResult.NOT_SUPPORTED;
+                    }
+                    if (DISTRICT_ENABLED) {
+                        position = read32Row(row, DISTRICT_POSITION_OFFSET).longValue();
+                        record.district = readStr(position, mydatabuffer, filehandle);
+                    } else {
+                        record.district = IPResult.NOT_SUPPORTED;
+                    }
+                    if (ASN_ENABLED) {
+                        position = read32Row(row, ASN_POSITION_OFFSET).longValue();
+                        record.asn = readStr(position, mydatabuffer, filehandle);
+                    } else {
+                        record.asn = IPResult.NOT_SUPPORTED;
+                    }
+                    if (AS_ENABLED) {
+                        position = read32Row(row, AS_POSITION_OFFSET).longValue();
+                        record.as = readStr(position, mydatabuffer, filehandle);
+                    } else {
+                        record.as = IPResult.NOT_SUPPORTED;
                     }
                     record.status = "OK";
                     break;

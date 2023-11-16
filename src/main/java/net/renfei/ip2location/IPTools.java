@@ -1,5 +1,7 @@
 package net.renfei.ip2location;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.Inet4Address;
@@ -388,8 +390,7 @@ public class IPTools {
 
         } while (ipFromBin.compareTo(ipToBin) < 0);
 
-        for (Map.Entry<String, Integer>
-                entry : networks.entrySet()) {
+        for (Map.Entry<String, Integer> entry : networks.entrySet()) {
             result.add(CompressIPv6(BinaryToIP(entry.getKey())) + "/" + entry.getValue());
         }
 
@@ -464,33 +465,26 @@ public class IPTools {
         ip = arr[0];
         prefix = Integer.parseInt(arr[1]);
 
-        String hexStartAddress = ExpandIPv6(ip).replaceAll(":", "");
-        String hexEndAddress = hexStartAddress;
+        String[] parts = ExpandIPv6(ip).split("\\:");
 
-        int bits = 128 - prefix;
-        int x;
-        String y;
-        int pos = 31;
-        List<Integer> values;
-        char[] tmp;
-        while (bits > 0) {
-            values = Arrays.asList(4, bits);
-            x = Integer.parseInt(String.valueOf(hexEndAddress.charAt(pos)), 16);
-            y = String.format("%x", (x | (int) (Math.pow(2, Collections.min(values)) - 1))); // single hex char
+        String bitStart = StringUtils.repeat('1', prefix) + StringUtils.repeat('0', 128 - prefix);
+        String bitEnd = StringUtils.repeat('0', prefix) + StringUtils.repeat('1', 128 - prefix);
 
-            // replace char
-            tmp = hexEndAddress.toCharArray();
-            tmp[pos] = y.charAt(0);
-            hexEndAddress = String.valueOf(tmp);
+        int chunkSize = 16;
 
-            bits -= 4;
-            pos -= 1;
+        String[] floors = bitStart.split("(?<=\\G.{" + chunkSize + "})");
+        String[] ceilings = bitEnd.split("(?<=\\G.{" + chunkSize + "})");
+
+        List<String> startIP = new ArrayList(8);
+        List<String> endIP = new ArrayList(8);
+
+        for (int x = 0; x < 8; x++) {
+            startIP.add(Integer.toHexString(Integer.parseInt(parts[x], 16) & Integer.parseInt(floors[x], 2)));
+            endIP.add(Integer.toHexString(Integer.parseInt(parts[x], 16) | Integer.parseInt(ceilings[x], 2)));
         }
 
-        hexStartAddress = hexStartAddress.replaceAll("(.{4})", "$1:");
-        hexStartAddress = hexStartAddress.substring(0, hexStartAddress.length() - 1);
-        hexEndAddress = hexEndAddress.replaceAll("(.{4})", "$1:");
-        hexEndAddress = hexEndAddress.substring(0, hexEndAddress.length() - 1);
+        String hexStartAddress = ExpandIPv6(StringUtils.join(startIP, ":"));
+        String hexEndAddress = ExpandIPv6(StringUtils.join(endIP, ":"));
 
         return new String[]{hexStartAddress, hexEndAddress};
     }

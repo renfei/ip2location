@@ -30,7 +30,7 @@ public class IPResult {
     String as;
     String status;
     boolean delay = false;
-    String version = "Version 8.11.0";
+    String version = "Version 8.11.2";
 
     IPResult(String ipstring) {
         ip_address = ipstring;
@@ -293,38 +293,35 @@ public class IPResult {
      *
      * @return the result in a formatted string.
      */
-    @Override
     public String toString() {
-        return "IPResult{" +
-                "ip_address='" + ip_address + '\'' +
-                ", country_short='" + country_short + '\'' +
-                ", country_long='" + country_long + '\'' +
-                ", region='" + region + '\'' +
-                ", city='" + city + '\'' +
-                ", isp='" + isp + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", domain='" + domain + '\'' +
-                ", zipcode='" + zipcode + '\'' +
-                ", netspeed='" + netspeed + '\'' +
-                ", timezone='" + timezone + '\'' +
-                ", iddcode='" + iddcode + '\'' +
-                ", areacode='" + areacode + '\'' +
-                ", weatherstationcode='" + weatherstationcode + '\'' +
-                ", weatherstationname='" + weatherstationname + '\'' +
-                ", mcc='" + mcc + '\'' +
-                ", mnc='" + mnc + '\'' +
-                ", mobilebrand='" + mobilebrand + '\'' +
-                ", elevation=" + elevation +
-                ", usagetype='" + usagetype + '\'' +
-                ", addresstype='" + addresstype + '\'' +
-                ", category='" + category + '\'' +
-                ", district='" + district + '\'' +
-                ", asn='" + asn + '\'' +
-                ", as='" + as + '\'' +
-                ", status='" + status + '\'' +
-                ", delay=" + delay +
-                ", version='" + version + '\'' +
-                '}';
+        String NL = System.getProperty("line.separator");
+        StringBuffer buf = new StringBuffer("IP2LocationRecord:" + NL);
+        buf.append("\tIP Address = " + ip_address + NL);
+        buf.append("\tCountry Short = " + country_short + NL);
+        buf.append("\tCountry Long = " + country_long + NL);
+        buf.append("\tRegion = " + region + NL);
+        buf.append("\tCity = " + city + NL);
+        buf.append("\tISP = " + isp + NL);
+        buf.append("\tLatitude = " + latitude + NL);
+        buf.append("\tLongitude = " + longitude + NL);
+        buf.append("\tDomain = " + domain + NL);
+        buf.append("\tZipCode = " + zipcode + NL);
+        buf.append("\tTimeZone = " + timezone + NL);
+        buf.append("\tNetSpeed = " + netspeed + NL);
+        buf.append("\tIDDCode = " + iddcode + NL);
+        buf.append("\tAreaCode = " + areacode + NL);
+        buf.append("\tWeatherStationCode = " + weatherstationcode + NL);
+        buf.append("\tWeatherStationName = " + weatherstationname + NL);
+        buf.append("\tMCC = " + mcc + NL);
+        buf.append("\tMNC = " + mnc + NL);
+        buf.append("\tMobileBrand = " + mobilebrand + NL);
+        buf.append("\tElevation = " + elevation + NL);
+        buf.append("\tUsageType = " + usagetype + NL);
+        buf.append("\tAddressType = " + addresstype + NL);
+        buf.append("\tCategory = " + category + NL);
+        buf.append("\tDistrict = " + district + NL);
+        buf.append("\tASN = " + asn + NL);
+        buf.append("\tAS = " + as + NL);
+        return buf.toString();
     }
 }

@@ -139,6 +139,55 @@ public class IP2Location {
 
     }
 
+    interface FileLike {
+
+        interface Supplier {
+            FileLike open() throws IOException;
+
+            boolean isValid();
+        }
+
+        int read(byte[] buffer) throws IOException;
+
+        int read(byte b[], int off, int len) throws IOException;
+
+        void seek(long pos) throws IOException;
+
+        void close() throws IOException;
+    }
+
+    /**
+     * This function returns the package version.
+     *
+     * @return Package version
+     */
+    public String GetPackageVersion() {
+        if (_MetaData == null) {
+            return "";
+        }
+        if (_MetaData.getDBType() == 0) {
+            return "";
+        } else {
+            return String.valueOf(_MetaData.getDBType());
+        }
+    }
+
+    /**
+     * This function returns the IP database version.
+     *
+     * @return IP database version
+     */
+    public String GetDatabaseVersion() {
+        if (_MetaData == null) {
+            return "";
+        }
+        if (_MetaData.getDBYear() == 0) {
+            return "";
+        } else {
+            return "20" + _MetaData.getDBYear() + "." + _MetaData.getDBMonth() + "." + _MetaData.getDBDay();
+        }
+    }
+
     /**
      * This function can be used to pre-load the BIN file.
      *
@@ -174,6 +223,7 @@ public class IP2Location {
                 return DBPath.length() > 0;
             }
         };
+
         LoadBIN();
     }
 
@@ -219,23 +269,6 @@ public class IP2Location {
             }
         };
         LoadBIN();
-    }
-
-    interface FileLike {
-
-        interface Supplier {
-            FileLike open() throws IOException;
-
-            boolean isValid();
-        }
-
-        int read(byte[] buffer) throws IOException;
-
-        int read(byte b[], int off, int len) throws IOException;
-
-        void seek(long pos) throws IOException;
-
-        void close() throws IOException;
     }
 
     /**
@@ -456,7 +489,7 @@ public class IP2Location {
         byte[] fullrow = null;
 
         try {
-            if (IPAddress.length() == 0) {
+            if (IPAddress == null || IPAddress.length() == 0) {
                 record.status = "EMPTY_IP_ADDRESS";
                 return record;
             }
@@ -588,7 +621,7 @@ public class IP2Location {
                         mydatabuffer.order(ByteOrder.LITTLE_ENDIAN);
                     } else {
                         row = new byte[rowlen];
-                        System.arraycopy(fullrow, firstcol, row, 0, rowlen); // extract the actual row data
+                        System.arraycopy(fullrow, firstcol, row, (int) 0, rowlen); // extract the actual row data
                     }
 
                     if (COUNTRY_ENABLED) {
@@ -774,8 +807,9 @@ public class IP2Location {
                     String[] myarr = mymatch.replaceAll("^:+", "").replaceAll(":+$", "").split(":");
 
                     int len = myarr.length;
-                    StringBuilder bf = new StringBuilder(32);
-                    for (String unpadded : myarr) {
+                    StringBuffer bf = new StringBuffer(32);
+                    for (int x = 0; x < len; x++) {
+                        String unpadded = myarr[x];
                         bf.append(padme.substring(unpadded.length())).append(unpadded); // safe padding for JDK 1.4
                     }
                     long mylong = new BigInteger(bf.toString(), 16).longValue();
@@ -815,22 +849,23 @@ public class IP2Location {
                     String part1hex = Integer.toHexString(part1);
                     String part2hex = Integer.toHexString(part2);
 
-                    String bf = v6part +
-                            padme.substring(part1hex.length()) +
-                            part1hex +
-                            ":" +
-                            padme.substring(part2hex.length()) +
-                            part2hex;
+                    StringBuffer bf = new StringBuffer(v6part.length() + 9);
+                    bf.append(v6part);
+                    bf.append(padme.substring(part1hex.length()));
+                    bf.append(part1hex);
+                    bf.append(":");
+                    bf.append(padme.substring(part2hex.length()));
+                    bf.append(part2hex);
 
-                    myIP2 = bf.toUpperCase();
+                    myIP2 = bf.toString().toUpperCase();
 
                     String[] myarr = myIP2.split("::");
 
                     String[] leftside = myarr[0].split(":");
 
-                    StringBuilder bf2 = new StringBuilder(40);
-                    StringBuilder bf3 = new StringBuilder(40);
-                    StringBuilder bf4 = new StringBuilder(40);
+                    StringBuffer bf2 = new StringBuffer(40);
+                    StringBuffer bf3 = new StringBuffer(40);
+                    StringBuffer bf4 = new StringBuffer(40);
 
                     len = leftside.length;
                     int totalsegments = 0;
@@ -885,8 +920,9 @@ public class IP2Location {
                         String[] myarr = mymatch.replaceAll("^:+", "").replaceAll(":+$", "").split(":");
 
                         int len = myarr.length;
-                        StringBuilder bf = new StringBuilder(32);
-                        for (String unpadded : myarr) {
+                        StringBuffer bf = new StringBuffer(32);
+                        for (int x = 0; x < len; x++) {
+                            String unpadded = myarr[x];
                             bf.append(padme.substring(unpadded.length())).append(unpadded); // safe padding for JDK 1.4
                         }
 
@@ -908,9 +944,9 @@ public class IP2Location {
 
                         String[] leftside = myarr[0].split(":");
 
-                        StringBuilder bf2 = new StringBuilder(40);
-                        StringBuilder bf3 = new StringBuilder(40);
-                        StringBuilder bf4 = new StringBuilder(40);
+                        StringBuffer bf2 = new StringBuffer(40);
+                        StringBuffer bf3 = new StringBuffer(40);
+                        StringBuffer bf4 = new StringBuffer(40);
 
                         int len = leftside.length;
                         int totalsegments = 0;
@@ -985,7 +1021,7 @@ public class IP2Location {
             mybuffer.get(row, 0, (int) mylen);
         } else {
             filehandle.seek(position - 1);
-            filehandle.read(row, 0, (int) mylen);
+            filehandle.read(row, (int) 0, (int) mylen);
         }
         return row;
     }
@@ -1026,7 +1062,7 @@ public class IP2Location {
     private BigInteger read32Row(byte[] row, final int from) {
         final int len = 4;
         byte[] buf = new byte[len];
-        System.arraycopy(row, from, buf, 0, len);
+        System.arraycopy(row, from, buf, (int) 0, len);
         reverse(buf);
         return new BigInteger(1, buf);
     }
@@ -1039,7 +1075,7 @@ public class IP2Location {
             final int bsize = 4;
             filehandle.seek(position - 1);
             byte[] buf = new byte[bsize];
-            filehandle.read(buf, 0, bsize);
+            filehandle.read(buf, (int) 0, bsize);
             reverse(buf);
             return new BigInteger(1, buf);
         }

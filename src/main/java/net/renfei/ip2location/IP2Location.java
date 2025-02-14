@@ -480,7 +480,9 @@ public class IP2Location {
      * @throws IOException If an input or output exception occurred
      */
     public IPResult IPQuery(String IPAddress) throws IOException {
-        IPAddress = IPAddress.trim();
+        if (IPAddress != null) {
+            IPAddress = IPAddress.trim();
+        }
         IPResult record = new IPResult(IPAddress);
         FileLike filehandle = null;
         ByteBuffer mybuffer = null;

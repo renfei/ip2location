@@ -285,7 +285,7 @@ public class IP2Location {
         _MapDataBuffer = null;
     }
 
-    private void CreateMappedBytes() throws IOException {
+    private synchronized void CreateMappedBytes() throws IOException {
         try (RandomAccessFile aFile = new RandomAccessFile(IPDatabasePath, "r")) {
             final FileChannel inChannel = aFile.getChannel();
             CreateMappedBytes(inChannel);

@@ -55,6 +55,9 @@ public class IP2Location {
     private static final int[] DISTRICT_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23};
     private static final int[] ASN_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24};
     private static final int[] AS_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25};
+    private static final int[] ASDOMAIN_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26};
+    private static final int[] ASUSAGETYPE_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27};
+    private static final int[] ASCIDR_POSITION = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28};
     static final DecimalFormat GEO_COORDINATE_FORMAT;
 
     static {
@@ -110,6 +113,9 @@ public class IP2Location {
     private int DISTRICT_POSITION_OFFSET;
     private int ASN_POSITION_OFFSET;
     private int AS_POSITION_OFFSET;
+    private int ASDOMAIN_POSITION_OFFSET;
+    private int ASUSAGETYPE_POSITION_OFFSET;
+    private int ASCIDR_POSITION_OFFSET;
     private boolean COUNTRY_ENABLED;
     private boolean REGION_ENABLED;
     private boolean CITY_ENABLED;
@@ -134,6 +140,9 @@ public class IP2Location {
     private boolean DISTRICT_ENABLED;
     private boolean ASN_ENABLED;
     private boolean AS_ENABLED;
+    private boolean ASDOMAIN_ENABLED;
+    private boolean ASUSAGETYPE_ENABLED;
+    private boolean ASCIDR_ENABLED;
 
     public IP2Location() {
 
@@ -393,6 +402,9 @@ public class IP2Location {
                 DISTRICT_POSITION_OFFSET = (DISTRICT_POSITION[dbtype] != 0) ? (DISTRICT_POSITION[dbtype] - 2) << 2 : 0;
                 ASN_POSITION_OFFSET = (ASN_POSITION[dbtype] != 0) ? (ASN_POSITION[dbtype] - 2) << 2 : 0;
                 AS_POSITION_OFFSET = (AS_POSITION[dbtype] != 0) ? (AS_POSITION[dbtype] - 2) << 2 : 0;
+                ASDOMAIN_POSITION_OFFSET = (ASDOMAIN_POSITION[dbtype] != 0) ? (ASDOMAIN_POSITION[dbtype] - 2) << 2 : 0;
+                ASUSAGETYPE_POSITION_OFFSET = (ASUSAGETYPE_POSITION[dbtype] != 0) ? (ASUSAGETYPE_POSITION[dbtype] - 2) << 2 : 0;
+                ASCIDR_POSITION_OFFSET = (ASCIDR_POSITION[dbtype] != 0) ? (ASCIDR_POSITION[dbtype] - 2) << 2 : 0;
 
                 COUNTRY_ENABLED = (COUNTRY_POSITION[dbtype] != 0);
                 REGION_ENABLED = (REGION_POSITION[dbtype] != 0);
@@ -418,6 +430,9 @@ public class IP2Location {
                 DISTRICT_ENABLED = (DISTRICT_POSITION[dbtype] != 0);
                 ASN_ENABLED = (ASN_POSITION[dbtype] != 0);
                 AS_ENABLED = (AS_POSITION[dbtype] != 0);
+                ASDOMAIN_ENABLED = (ASDOMAIN_POSITION[dbtype] != 0);
+                ASUSAGETYPE_ENABLED = (ASUSAGETYPE_POSITION[dbtype] != 0);
+                ASCIDR_ENABLED = (ASCIDR_POSITION[dbtype] != 0);
 
                 if (_MetaData.getIndexed()) {
                     int readLen = _IndexArrayIPv4.length;
@@ -770,6 +785,24 @@ public class IP2Location {
                         record.as = readStr(position, mydatabuffer, filehandle);
                     } else {
                         record.as = IPResult.NOT_SUPPORTED;
+                    }
+                    if (ASDOMAIN_ENABLED) {
+                        position = read32Row(row, ASDOMAIN_POSITION_OFFSET).longValue();
+                        record.asdomain = readStr(position, mydatabuffer, filehandle);
+                    } else {
+                        record.asdomain = IPResult.NOT_SUPPORTED;
+                    }
+                    if (ASUSAGETYPE_ENABLED) {
+                        position = read32Row(row, ASUSAGETYPE_POSITION_OFFSET).longValue();
+                        record.asusagetype = readStr(position, mydatabuffer, filehandle);
+                    } else {
+                        record.asusagetype = IPResult.NOT_SUPPORTED;
+                    }
+                    if (ASCIDR_ENABLED) {
+                        position = read32Row(row, ASCIDR_POSITION_OFFSET).longValue();
+                        record.ascidr = readStr(position, mydatabuffer, filehandle);
+                    } else {
+                        record.ascidr = IPResult.NOT_SUPPORTED;
                     }
                     record.status = "OK";
                     break;

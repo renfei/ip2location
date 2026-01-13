@@ -19,7 +19,7 @@ jobs:
           wget "https://www.ip2location.com/download/?token=${{ secrets.IP2LOCATION_TOKEN }}&file=DB11LITEBINIPV6" -O ./IP2LOCATION-LITE-DB11.IPV6.BIN.ZIP
 
       - name: Commit
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Renew Database
           commit_user_name: github-actions[bot]

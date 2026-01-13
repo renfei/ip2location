@@ -30,7 +30,7 @@
 <dependency>
     <groupId>net.renfei</groupId>
     <artifactId>ip2location</artifactId>
-    <version>1.2.5</version>
+    <version>1.2.6</version>
 </dependency>
 ```
 
